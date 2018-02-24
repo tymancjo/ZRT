@@ -1,4 +1,6 @@
 function setup() {
+
+
 	// creating the canvas space
 	canvas = createCanvas(600, 400);
 	canvas.parent('canvas');
@@ -19,6 +21,7 @@ function setup() {
 
 	// the position variable - handy for drawing
 	theX = 0;
+	play = true;
 }
 
 function draw() {
@@ -41,14 +44,17 @@ function draw() {
 	text('vel: ' + Math.round(1000 * b.v)/1000 + ' m/s', 10, 85 + 10);
 
 	fill(200);
+	stroke(255);
 	r.angle(a.value());
 	r.shape(10,10,width-10,height-10);
 
 	b.setup(m.value()/100, mi.value()/100.0, dz.value()/100.0);
 
-	b.update(dt, r);
-	if (b.pos > r.s){
-		b.reset();
+	if (play) {
+		b.update(dt, r);
+		if (b.pos > r.s){
+			b.reset();
+		}
 	}
 
 	objPos = r.drawAtPos(b.pos);
@@ -58,7 +64,7 @@ function draw() {
 			translate(objPos.x, objPos.y);
 			fill(255);
 			rotate(-objPos.a);
-			translate(0,-10);
+			translate(0,-12);
 			rectMode(CENTER);
 			rect(0,0,20,20);
 		pop();
