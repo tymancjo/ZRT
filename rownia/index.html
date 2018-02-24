@@ -5,7 +5,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>rownia</title>
+	<title>Równia Pochyła - inclined plane</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 
 	<script src="libraries/p5.js"></script>
 	<script src="libraries/p5.dom.js"></script>
@@ -15,8 +17,10 @@
 
 	<style>
 		body {
+			font-family: 'Raleway', sans-serif;
+
 			margin:0;
-			padding:0;
+			padding: 10px;
 			overflow: auto;
 			display: flex;
 			flex-direction: column;
@@ -24,8 +28,45 @@
 		canvas {
 			margin:auto;
 		}
+
+		.wrap {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-start;
+		}
+
+		#settings {
+			margin-left: 20px;
+		}
+
+		.setup-row {
+			display: flex;
+			align-items: center;
+		}
+
 	</style>
 </head>
 <body>
+	<h1>inclined plane simple simulator</h1>
+	<div class="wrap">
+		<div id="canvas"></div>
+		<div id="settings">
+			<h3>Setup:</h3>
+			<div class="setup-row"><span id="mass"></span> Mass</div>
+			<div class="setup-row"><span id="mi"></span> Friction coeff.</div>
+			<div class="setup-row"><span id="dz"></span> Magnet.Drag.coeff.</div>
+			<div class="setup-row"><span id="a"></span> Slope Angle.</div>
+			<div class="setup-row"><button class="setup-bth" onclick="b.reset();">
+				Restart Object
+			</button></div>
+		</div>
+	</div>
+	<div class="bottom">
+		<p> This is just a simple simulation of very basic inclined plane model.
+		In addition to the slope geometry and friction there is a magnetic drag force possible to be taken under consideration.</p>
+		<p>The magnetic drag is there to simulate the situation when a permenent magnet is sliding on a conductor slope. The magnetic drag force is assumed to be Fm = dz * velocity</p>
+		<p>So the general equation for forces is F = m*g(sin(alpha) - mi*cos(alpha)) - Fm</p>
+		<p>with off course some additional limiatation for the friction drag force presence only if v>0 and so on...</p>
+	</div>
 </body>
 </html>

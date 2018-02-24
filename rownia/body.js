@@ -23,14 +23,19 @@ class body{
 		let mg = this.m * this.g;
 		let F = rownia.getF(mg).Fa - this.v * this.dz;
 
-		if(rownia.getF(mg).Fa > 0){
-			F -=  rownia.getF(mg).Fn * this.mi 
+		// if(rownia.getF(mg).Fa > 0){
+		// 	F -=  rownia.getF(mg).Fn * this.mi 
+		// }
+
+		if(this.v > 0){
+			F -=  rownia.getF(mg).Fn * this.mi;
 		}
 
-		if (F < 0 ) {F = 0;}
+		// if ((F < 0) && (this.v = 0) ) {F = 0;}
 
 		this.a = F / this.m;
 		this.v += this.a * dt;
+		if(this.v < 0) {this.v = 0;}
 		this.pos += this.v * dt;
 	}
 

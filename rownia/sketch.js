@@ -1,26 +1,30 @@
 function setup() {
-	createCanvas(600, 400);
-	angle = 0;
-	theX = 0;
-
-	createP('object mass:');
+	// creating the canvas space
+	canvas = createCanvas(600, 400);
+	canvas.parent('canvas');
+	
+		// control sliders binded to the existing html elements
 		m = createSlider(1, 100, 10);
-	createP('friction coeff:');
+			m.parent('mass');
 		mi = createSlider(0, 100, 20);
-	createP('dzetta coeff:');
+			mi.parent('mi');
 		dz = createSlider(0, 1000, 0);
-	createP('slope angle:');
-		a = createSlider(1, 89, 45);
+			dz.parent('dz');
+		a = createSlider(0, 90, 45);
+			a.parent('a');
 
+	// creating the main actors
 	r = new rownia(45, 1);
-
 	b = new body(0.1);
+
+	// the position variable - handy for drawing
+	theX = 0;
 }
 
 function draw() {
-	background(100);
+	background('#2E70A2');
+
 	noStroke();
-	fill(200);
 	dt = getFrameRate();
 	if (dt){
 		dt = 1/dt;
@@ -28,11 +32,15 @@ function draw() {
 		dt = 0;
 	}
 
+	fill(255);
 	text('mass: ' + b.m + ' kg', 10, 10 + 10);
 	text('mi: ' + b.mi + '', 10, 25 + 10);
 	text('dz: ' + b.dz + ' kg/s', 10, 40 + 10);
 	text('alpha: ' + a.value() + ' deg', 10, 55 + 10);
+	text('slope length: ' + r.s + ' m', 10, 70 + 10);
+	text('vel: ' + Math.round(1000 * b.v)/1000 + ' m/s', 10, 85 + 10);
 
+	fill(200);
 	r.angle(a.value());
 	r.shape(10,10,width-10,height-10);
 
@@ -48,7 +56,7 @@ function draw() {
 	if(objPos){
 		push();
 			translate(objPos.x, objPos.y);
-			fill(150);
+			fill(255);
 			rotate(-objPos.a);
 			translate(0,-10);
 			rectMode(CENTER);
