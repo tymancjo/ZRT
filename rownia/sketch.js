@@ -6,22 +6,24 @@ function setup() {
 	canvas.parent('canvas');
 	
 		// control sliders binded to the existing html elements
-		m = createSlider(1, 100, 10);
+		m = createSlider(1, 500, 57);
 			m.parent('mass');
-		mi = createSlider(0, 100, 20);
+		mi = createSlider(0, 1000, 467);
 			mi.parent('mi');
-		dz = createSlider(0, 1000, 0);
+		dz = createSlider(0, 8000, 0);
 			dz.parent('dz');
 		a = createSlider(0, 90, 45);
 			a.parent('a');
 
 	// creating the main actors
-	r = new rownia(45, 1);
+	r = new rownia(45, 0.5);
 	b = new body(0.1);
 
 	// the position variable - handy for drawing
 	theX = 0;
 	play = true;
+	time = performance.now();
+	dtime = 0;
 }
 
 function draw() {
@@ -42,17 +44,20 @@ function draw() {
 	text('alpha: ' + a.value() + ' deg', 10, 55 + 10);
 	text('slope length: ' + r.s + ' m', 10, 70 + 10);
 	text('vel: ' + Math.round(1000 * b.v)/1000 + ' m/s', 10, 85 + 10);
+	text('run Time: ' + Math.round(1000 * dtime)/1000 + ' ms', 10, 100 + 10);
 
 	fill(200);
 	stroke(255);
 	r.angle(a.value());
 	r.shape(10,10,width-10,height-10);
 
-	b.setup(m.value()/100, mi.value()/100.0, dz.value()/100.0);
+	b.setup(m.value()/1000.0, mi.value()/1000.0, dz.value()/1000.0);
 
 	if (play) {
 		b.update(dt, r);
 		if (b.pos > r.s){
+			dtime = performance.now() - time;
+			time = performance.now();			
 			b.reset();
 		}
 	}

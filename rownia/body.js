@@ -21,21 +21,22 @@ class body{
 	update(dt, rownia){
 		// main motion equations
 		let mg = this.m * this.g;
-		let F = rownia.getF(mg).Fa - this.v * this.dz;
+		// just the gravity force component forward
+		let F = rownia.getF(mg).Fa; 
 
-		// if(rownia.getF(mg).Fa > 0){
-		// 	F -=  rownia.getF(mg).Fn * this.mi 
-		// }
+		// Friction force calc ulations
+		// It can max be equal to front froce Fa
+		let Ft = Math.min(rownia.getF(mg).Fn * this.mi, F);
 
-		if(this.v > 0){
-			F -=  rownia.getF(mg).Fn * this.mi;
-		}
 
-		// if ((F < 0) && (this.v = 0) ) {F = 0;}
+		F -= Ft;
+		
+		// Magnetic Drag Force
+		F -= this.v * this.dz;
+
 
 		this.a = F / this.m;
 		this.v += this.a * dt;
-		if(this.v < 0) {this.v = 0;}
 		this.pos += this.v * dt;
 	}
 
